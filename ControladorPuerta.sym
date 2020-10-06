@@ -1,0 +1,275 @@
+004-005 @READ_PROGRAM_MEMORY8.P1
+004     @WRITE_PROGRAM_MEMORY8.P2
+008     PSP_DATA
+015     CCP_1_LOW
+015     CCP_1
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B     CCP_2
+01C     CCP_2_HIGH
+020     @INTERRUPT_AREA
+021     @INTERRUPT_AREA
+022     @INTERRUPT_AREA
+023     @INTERRUPT_AREA
+024     @INTERRUPT_AREA
+025     @INTERRUPT_AREA
+026     @INTERRUPT_AREA
+027     @INTERRUPT_AREA
+028     seconds
+029     minutes
+02A     hours
+02B     date
+02C     mounth
+02D     year_high
+02E     year_low
+02F.0   current_door
+02F.1   read_complete
+02F.2   door
+02F.3   modbus_serial_new
+030     user
+031     time_counter
+032     facCode
+033-034 userCode
+035     wiegand_counter
+036-04F buffer
+050     reading
+051     rs232_errors
+052     modbus_serial_state
+053-054 modbus_serial_crc
+055     @TRIS_C
+056-057 address
+058-059 access_address
+05A     access_event_count
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07F     @INTERRUPT_AREA
+098     TXSTA
+098.1   TRMT
+09C.6   C1OUT
+09C.7   C2OUT
+0A0-0E3 modbus_rx
+0FF     @INTERRUPT_AREA
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+110-12F mbus_data
+130     MAIN.facCode
+131-132 MAIN.userCode
+133     i
+134     clean_buffer.i
+134     rtc_init.minutes
+134     conf_data.index
+134     find_user.read
+134     code_update.i
+134     modbus_exception_rsp.address
+134     regist_data.index
+134     MAIN.@SCRATCH1
+135     @delay_ms1.P1
+135     modbus_read_input_registers_rsp.address
+135-136 modbus_exception_rsp.func
+135-136 code_update.multiplo
+135     regist_data.offset
+135     modbus_read_holding_registers_rsp.address
+135     conf_data.offset
+135     rtc_init.hours
+135     find_user.FacilityCode
+135     clean_buffer.@SCRATCH1
+135     MAIN.@SCRATCH2
+136     regist_data.high
+136     modbus_read_input_registers_rsp.byte_count
+136     modbus_write_single_coil_rsp.address
+136     conf_data.high
+136-137 find_user.IdCardCode
+136     modbus_read_holding_registers_rsp.byte_count
+136     rtc_init.date
+136     clean_buffer.@SCRATCH2
+136     MAIN.@SCRATCH3
+137-138 modbus_read_holding_registers_rsp.reg_data
+137-138 modbus_write_single_coil_rsp.output_address
+137-138 modbus_read_input_registers_rsp.input_data
+137     rtc_init.month
+137     regist_data.low
+137     conf_data.low
+137     modbus_exception_rsp.error
+137     code_update.@SCRATCH1
+137     MAIN.@SCRATCH4
+138     regist_data.i
+138     conf_data.i
+138     modbus_write_multiple_registers_rsp.address
+138     rtc_init.year
+138     find_user.access
+138     modbus_exception_rsp.@SCRATCH1
+139     modbus_read_holding_registers_rsp.i
+139-13A modbus_write_multiple_registers_rsp.start_address
+139     find_user.user_count
+139     dec_to_bcd.dec
+139     modbus_read_input_registers_rsp.i
+139-13A modbus_write_single_coil_rsp.output_value
+139     modbus_exception_rsp.@SCRATCH2
+139     rtc_init.@SCRATCH1
+139     regist_data.@SCRATCH1
+139     conf_data.@SCRATCH1
+13A     modbus_read_holding_registers_rsp.@SCRATCH1
+13A     modbus_read_input_registers_rsp.@SCRATCH1
+13A     dec_to_bcd.@SCRATCH1
+13A     regist_data.@SCRATCH2
+13A     conf_data.@SCRATCH2
+13A     find_user.@SCRATCH1
+13B     @DIV88.P1
+13B-13C modbus_write_multiple_registers_rsp.quantity
+13B     modbus_read_holding_registers_rsp.@SCRATCH2
+13B     modbus_read_input_registers_rsp.@SCRATCH2
+13B     modbus_write_single_coil_rsp.@SCRATCH1
+13C     @DIV88.P1
+13C     modbus_read_holding_registers_rsp.@SCRATCH3
+13C     modbus_read_input_registers_rsp.@SCRATCH3
+13D     modbus_serial_send_start.to
+13D     modbus_serial_send_stop.crc_low
+13D     modbus_write_multiple_registers_rsp.@SCRATCH1
+13D     @DIV88.@SCRATCH1
+13E     modbus_serial_send_stop.crc_high
+13E     modbus_serial_send_start.func
+13F     modbus_serial_putc.c
+142     buffer_update.value
+142     real_time.day
+142     incomming_modbus_serial.c
+142     regist.@SCRATCH1
+143     modbus_calc_crc.data
+143     buffer_update.currentDoor
+143     modbus_enable_timeout.enable
+143     incomming_modbus_serial.@SCRATCH1
+143     real_time.@SCRATCH1
+143     regist.@SCRATCH2
+144     modbus_calc_crc.uIndex
+144     buffer_update.@SCRATCH1
+144     incomming_modbus_serial.@SCRATCH2
+144     regist.@SCRATCH3
+145     buffer_update.@SCRATCH2
+148     @I2C_READ_1.P1
+148     @I2C_WRITE_1.P2
+149     bcd_to_dec.bcd
+149     @I2C_READ_1.@SCRATCH1
+14A     bcd_to_dec.varia
+14A     @I2C_READ_1.@SCRATCH2
+14B     bcd_to_dec.@SCRATCH1
+17F     @INTERRUPT_AREA
+1FF     @INTERRUPT_AREA
+27F     @INTERRUPT_AREA
+2FF     @INTERRUPT_AREA
+37F     @INTERRUPT_AREA
+3FF     @INTERRUPT_AREA
+47F     @INTERRUPT_AREA
+4FF     @INTERRUPT_AREA
+57F     @INTERRUPT_AREA
+5FF     @INTERRUPT_AREA
+67F     @INTERRUPT_AREA
+6FF     @INTERRUPT_AREA
+77F     @INTERRUPT_AREA
+7FF     @INTERRUPT_AREA
+87F     @INTERRUPT_AREA
+8FF     @INTERRUPT_AREA
+97F     @INTERRUPT_AREA
+9FF     @INTERRUPT_AREA
+A7F     @INTERRUPT_AREA
+AFF     @INTERRUPT_AREA
+B7F     @INTERRUPT_AREA
+BFF     @INTERRUPT_AREA
+C7F     @INTERRUPT_AREA
+CFF     @INTERRUPT_AREA
+D7F     @INTERRUPT_AREA
+DFF     @INTERRUPT_AREA
+E7F     @INTERRUPT_AREA
+EFF     @INTERRUPT_AREA
+F7F     @INTERRUPT_AREA
+FFF     @INTERRUPT_AREA
+
+ROM Allocation:
+07DD  @delay_ms1
+071E  clean_buffer
+08DD  code_update
+025F  buffer_update
+08DA  receive_wiegand
+0B26  get_code
+07D6  get_door
+0277  ext_handler
+072E  wiegand_init
+02D9  @GETCH_BIU_1
+0051  modbus_auchCRCHi
+0158  modbus_auchCRCLo
+0706  RCV_ON
+070F  modbus_init
+02AA  modbus_enable_timeout
+02BA  modbus_timeout_now
+02E4  modbus_calc_crc
+093B  modbus_serial_putc
+02F6  incomming_modbus_serial
+0954  modbus_serial_send_start
+096A  modbus_serial_send_stop
+0927  modbus_kbhit
+0C3F  modbus_read_holding_registers_rsp
+0C9B  modbus_read_input_registers_rsp
+0C03  modbus_write_single_coil_rsp
+0DAA  modbus_write_multiple_registers_rsp
+0DD7  modbus_exception_rsp
+038A  @I2C_READ_1
+033E  @I2C_WRITE_1
+07BE  dec_to_bcd
+07A7  @DIV88
+03D7  bcd_to_dec
+0800  rtc_init
+05DA  real_time
+09B2  regist_data
+0989  conf_data
+0738  clean_registers
+0771  clean_white_memory
+06AD  handle_door
+03EC  regist
+0B31  find_user
+06D2  intRB0_handler
+06DB  timer1
+09E1  MAIN
+09E1  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    D:\Marcel\Maestria\MyThesis\Proyectos\Micro\ControladorPuerta\
+
+Project Files:
+    ControladorPuerta.c
+    C:\Archivos de programa\PICC\devices\16F877A.h
+    C:\Archivos de programa\PICC\devices\wiegand.c
+    C:\Archivos de programa\PICC\drivers\modbus.c
+    C:\Archivos de programa\PICC\drivers\EEPROMmemory.c
+    C:\Archivos de programa\PICC\drivers\rtcDS1307.c
+
+Units:
+    D:\Marcel\Maestria\MyThesis\Proyectos\Micro\ControladorPuerta\ControladorPuerta (main)
+
+Compiler Settings:
+    Processor:      PIC16F877A
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    ICD Provisions: Yes
+    Predefined symbols:
+       #define __DEBUG 1
+       #define __16F877A TRUE
+
+Output Files:
+    Errors:      ControladorPuerta.err
+    Ext Symbols: ControladorPuerta.esym
+    INHX8:       ControladorPuerta.hex
+    Symbols:     ControladorPuerta.sym
+    List:        ControladorPuerta.lst
+    Debug/COFF:  ControladorPuerta.cof
+    Project:     ControladorPuerta.PJT
+    Call Tree:   ControladorPuerta.tre
+    Statistics:  ControladorPuerta.sta

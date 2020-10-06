@@ -1,0 +1,78 @@
+_RETURN_
+CCP_1
+CCP_1_LOW
+CCP_1_HIGH
+CCP_2
+CCP_2_LOW
+CCP_2_HIGH
+PSP_DATA
+C1OUT
+C2OUT
+minutes
+hours
+date
+mounth
+year_high
+year_low
+current_door
+user
+time_counter
+facCode
+userCode
+wiegand_counter
+read_complete
+buffer
+reading
+door
+rs232_errors
+TXSTA
+TRMT
+modbus_serial_new
+modbus_serial_state
+modbus_serial_crc
+modbus_rx
+modbus_auchCRCHi
+modbus_auchCRCLo
+@TRIS_C
+lcd
+LCD_INIT_STRING
+LCD_WRITE
+LCD_READ
+address
+access_address
+access_event_count
+mbus_data
+
+Project Directory:
+    D:\Marcel\Maestria\MyThesis\Proyectos\Micro\ControladorPuerta\
+
+Project Files:
+    ControladorPuerta.c
+    C:\Archivos de programa\PICC\devices\16F877A.h
+    C:\Archivos de programa\PICC\devices\wiegand.c
+    C:\Archivos de programa\PICC\drivers\modbus.c
+    C:\Archivos de programa\PICC\drivers\EEPROMmemory.c
+    C:\Archivos de programa\PICC\drivers\rtcDS1307.c
+    C:\Archivos de programa\PICC\devices\lcd2.c
+
+Units:
+    D:\Marcel\Maestria\MyThesis\Proyectos\Micro\ControladorPuerta\ControladorPuerta (main)
+
+Compiler Settings:
+    Processor:      PIC16F877A
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    ICD Provisions: Yes
+    Output file:    Relocatable
+    Predefined symbols:
+       #define __DEBUG 1
+       #define __16F877A TRUE
+
+Output Files:
+    Errors:      ControladorPuerta.err
+    Ext Symbols: ControladorPuerta.esym
+    Object:      ControladorPuerta.o
+    Symbols:     ControladorPuerta.osym

@@ -1,0 +1,175 @@
+#include <16F877A.h>
+
+#FUSES NOWDT                    
+#FUSES NOBROWNOUT               
+#FUSES NOLVP                    
+#use delay(clock=4000000)
+
+#define eeprom_address long int 
+#define MODBUS_TYPE MODBUS_TYPE_SLAVE
+#define MODBUS_SERIAL_TYPE MODBUS_RTU     
+#define MODBUS_SERIAL_RX_BUFFER_SIZE 64
+#define MODBUS_SERIAL_BAUD 9600
+#define MODBUS_SERIAL_INT_SOURCE MODBUS_INT_RDA
+#define MODBUS_ADDRESS 1
+#define max_user_count 50
+#define green_led PIN_D1
+#define red_led PIN_D2
+#define open_door PIN_A3
+
+int user;
+int time_counter = 0;
+int bcd_buffer[10];
+
+#include <wiegand_ar6181rx.c>
+#include <modbus.c>
+#include <EEPROMmemory.c>
+
+EEPROM_ADDRESS address = 0;
+int16 mbus_data[16];
+
+//Funcion que crea la data que hay que pasar como respuesta al master
+void conf_data(int index, int offset)
+{
+   int high, low, i;
+   for(i = 0; i < offset; i++){
+      high = read_white_memory(index);
+      index++;
+      low = read_white_memory(index);
+      index++;
+      mbus_data[i] = make16(high, low);
+   }
+}
+
+//Funcion que desbloquea la puerta por un tiempo
+void handle_door()
+{
+	output_high(green_led);
+	output_low(red_led);
+	output_high(open_door);
+   enable_interrupts(int_timer1);
+   set_timer1(3036);
+}
+
+//Funcion que busca un codigo dentro de la lista blanca
+short find_user()
+{
+   int read;
+   int access;
+   address = 1;               
+         
+   //Aqui primero hay que actualizar el userCount leyendo la posicion 1 de la memoria
+   int user_count = read_white_memory(0); 
+   
+   //Recorriendo la memoria de codigos
+   for(user = 0; user < user_count; user++){ 
+      FacilityCode = read_white_memory(address);
+      address++;
+      //Obteniendo el UserCode (Sgtes 2 bytes del bloque que ocupa el codigo en la memoria I2C)
+      read = read_white_memory(address);    
+      address++;
+      IdCardCode = read * 256;
+      read = read_white_memory(address);    
+      address++;
+      IdCardCode += read;
+      //Obteniendo la politica de acceso (Ultimo byte del bloque que ocupa el codigo en la memoria I2C)
+      access = read_white_memory(address);
+      address++;
+      //Comparando 
+      if(facCode == FacilityCode && userCode == IdCardCode){
+		switch(access){
+			case 1:
+				if(current_door == 0)
+					return 1;
+				break;
+			case 2:
+				if(current_door == 1)
+					return 1;
+				break;
+			case 3:
+				return 1;
+		}   
+	  }
+	}
+	user = 254;	//Acceso denegado
+	return 0;
+}
+
+//Interrupcion por timer1 utilizada para volver a bloquear la puerta despues de producirse un accceso
+#int_timer1
+void timer1()
+{
+	if(time_counter < 5)
+		time_counter++;
+	else{
+		time_counter = 0;
+   		output_low(green_led);
+	    output_high(red_led);
+	  	output_low(open_door);
+   		disable_interrupts(int_timer1);
+	}
+}
+
+void main() 
+{
+  
+  modbus_init();
+  wiegand_init();
+  
+  write_white_memory(0, 0);
+  write_white_memory(1, 1);
+  write_white_memory(2, 1);
+  write_white_memory(3, 0x5B);
+  write_white_memory(4, 0xA0);
+  write_white_memory(5, 3);
+                     
+  //Inicializando las salidas 
+  output_low(green_led);
+  output_high(red_led);
+      
+  setup_adc_ports(NO_ANALOGS);
+  port_b_pullups(true);
+  setup_timer_1(T1_INTERNAL | T1_DIV_BY_8);
+  
+  //Habilitando interrupciones
+  enable_interrupts(int_ext);
+  ext_int_edge(H_TO_L);
+  enable_interrupts(global);
+  
+  while (TRUE){
+  
+      if(full_buffer()){
+         if(find_user())
+			handle_door();
+	  }
+		          
+      if(modbus_kbhit()){
+         delay_us(50);
+         //check address against our address, 0 is broadcast
+         if((modbus_rx.address == MODBUS_ADDRESS) || modbus_rx.address == 0)
+         {
+            switch(modbus_rx.func)
+            {
+			   
+			   case FUNC_READ_HOLDING_REGISTERS:	//Esta funcion sera utilizada para leer la lista blanca
+                  conf_data(modbus_rx.data[1],modbus_rx.data[3]);
+                  modbus_read_holding_registers_rsp(MODBUS_ADDRESS,(modbus_rx.data[3]*2),mbus_data);
+                  break;
+               
+               case FUNC_WRITE_MULTIPLE_REGISTERS:	//Esta funcion sera utilizada para actualizar la lista blanca asi como la fecha y hora
+				  address = modbus_rx.data[1] * 2; //un registro modbus contiene dos registros de memoria de codigos
+				   int i;
+				  for(i = 5; i < modbus_rx.data[4]; i++){
+                     write_white_memory(address, modbus_rx.data[i]);
+                     address++;
+                  }
+                  modbus_write_multiple_registers_rsp(MODBUS_ADDRESS, make16(modbus_rx.data[0],modbus_rx.data[1]), make16(modbus_rx.data[2],modbus_rx.data[3]));
+                  break; 
+
+               default:    //We don't support the function, so return exception
+                  modbus_exception_rsp(MODBUS_ADDRESS,modbus_rx.func,ILLEGAL_FUNCTION);
+            }
+         }
+      }
+   }
+}

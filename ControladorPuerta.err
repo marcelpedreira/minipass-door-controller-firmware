@@ -1,0 +1,4 @@
+>>> Warning 215 "C:\Archivos de programa\PICC\drivers\modbus_phy_layer_rtu.c" Line 24(1,1): Undefined identifier   MODBUS_TIMER_UPDATE
+*** Error 44 "C:\Archivos de programa\PICC\drivers\modbus_phy_layer_rtu.c" Line 27(9,49): Internal Error - Contact CCS  PPUSE
+      1 Errors,  1 Warnings.
+Build Failed.
