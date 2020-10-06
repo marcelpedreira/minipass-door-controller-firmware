@@ -4,7 +4,7 @@ The device is based on a PIC 16F877A microcontroller. Its purpose is to control 
 
 ## Components
 
-- 16F877A PIC microcontroller.
+- PIC 16F877A microcontroller.
 - MAX485 interface for communication using Modbus RTU protocol.
 - Dip switches to set the device address on the network.
 - Real Time Clock for reports generation.
